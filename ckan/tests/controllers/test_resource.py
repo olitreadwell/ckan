@@ -113,3 +113,13 @@ class TestCreate:
         assert res["size"] == len(content)
         assert res["format"] == "TXT"
         assert res["url"].endswith(filename)
+
+    def test_new_resource_page_has_no_add_resource_link(
+        self, user: dict[str, Any], app: types.FixtureApp, package: dict[str, Any]
+    ):
+        """The new resource page does not link to itself via the sidebar button."""
+        app.set_session_user(user["name"])
+
+        result = app.get(f"/dataset/{package['name']}/resource/new")
+
+        assert "Add new resource" not in result
