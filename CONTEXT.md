@@ -32,5 +32,6 @@
 - `2026-09-09` issue #9048 (Add resource page shows "Add new resource" button) — pr-opened (fork PR, this run) — mirror midnight-blue `no_new_res` param
 - `2026-09-23` trivial-fix pass (fork PR #25) — pr-opened — packed 17 genuine typo/dead-link fixes (file-pinning API docstrings, config/help, SECURITY, 2 dead docs links); fork CI fully green
 
+- `2026-09-24` trivial-fix pass (fork PR #26) — pr-opened — packed 10 genuine typo fixes across 8 files (config option help `resoure`->`resource`; CLI docstrings/comments; IAuthenticator docstring `accpets`->`accepts`; datastore backend+interface `dictonary`/`seach`/`mehtod`/`deferencing`; tracking model docstring `functinoality`); fork CI green (ruff/pyright/pytest/docs/towncrier)
 ## Mined gaps (discovered, not yet attempted)
 - `2026-09-09` #9048: sidebar "Add new resource" button renders on the Add Resource page itself (regression from #7586). Repro: GET /dataset/{name}/resource/new as editor shows the button. Expected: no link to the page you are already on. Fix: add `no_new_res` param to `ckan/templates/package/snippets/resources.html` (mirror `templates-midnight-blue`), pass `no_new_res=true` from `new_resource.html` + `new_resource_not_draft.html`, add towncrier fragment + controller test. Status: attempted (this run)
