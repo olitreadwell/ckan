@@ -1,5 +1,5 @@
 # ckan/ckan context
-> refreshed 2026-09-09 | upstream default: master @ 0731a7a4ab76dd11889eb89a892b3feae4fd69a8
+> refreshed 2026-09-24 | upstream default: master @ 4ccee8359cf73f93c9150fe22b831d182a85cf03
 
 ## Identity & policies
 - upstream: ckan/ckan, default branch `master`, primary language Python (Jinja templates), English-first (yes — issues/UI/docs all English)
