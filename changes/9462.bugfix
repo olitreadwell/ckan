@@ -1,0 +1,3 @@
+Make ``munge_title_to_name`` idempotent for long titles. Truncating a long
+title no longer leaves a trailing hyphen, so munging the resulting name a
+second time returns the same name.
