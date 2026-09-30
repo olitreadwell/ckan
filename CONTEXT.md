@@ -1,5 +1,5 @@
 # ckan/ckan context
-> refreshed 2026-09-24 | upstream default: master @ 4ccee8359cf73f93c9150fe22b831d182a85cf03
+> refreshed 2026-09-30 | upstream default: master @ b5b53dd376a51b6fa1799ea70027294661fe8586
 
 ## Identity & policies
 - upstream: ckan/ckan, default branch `master`, primary language Python (Jinja templates), English-first (yes — issues/UI/docs all English)
@@ -33,5 +33,6 @@
 - `2026-09-23` trivial-fix pass (fork PR #25) — pr-opened — packed 17 genuine typo/dead-link fixes (file-pinning API docstrings, config/help, SECURITY, 2 dead docs links); fork CI fully green
 
 - `2026-09-24` trivial-fix pass (fork PR #26) — pr-opened — packed 10 genuine typo fixes across 8 files (config option help `resoure`->`resource`; CLI docstrings/comments; IAuthenticator docstring `accpets`->`accepts`; datastore backend+interface `dictonary`/`seach`/`mehtod`/`deferencing`; tracking model docstring `functinoality`); fork CI green (ruff/pyright/pytest/docs/towncrier)
+- `2026-09-30` trivial-fix pass 3 (fork PR #29) — pr-opened — packed 9 typos + 1 dead link across 9 files (textview `occured`->`occurred`; example_flask_iblueprint `extention`->`extension`; datastore action docstring `accross`->`across`; resourceproxy docstring `availiable`->`available`; datapusher comment `updats`->`updates`; multilingual comments `suported`/`differenly`; search/query comment `definitons`->`definitions`; lib/files docstring `throught`->`through`; signals.rst blinker link 404 -> blinker.readthedocs.io). Distinct from PR #25/#26 files.
 ## Mined gaps (discovered, not yet attempted)
 - `2026-09-09` #9048: sidebar "Add new resource" button renders on the Add Resource page itself (regression from #7586). Repro: GET /dataset/{name}/resource/new as editor shows the button. Expected: no link to the page you are already on. Fix: add `no_new_res` param to `ckan/templates/package/snippets/resources.html` (mirror `templates-midnight-blue`), pass `no_new_res=true` from `new_resource.html` + `new_resource_not_draft.html`, add towncrier fragment + controller test. Status: attempted (this run)
