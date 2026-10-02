@@ -1,5 +1,5 @@
 # ckan/ckan context
-> refreshed 2026-10-01 | upstream default: master @ 66b91d635ff0d569124f2135247430966f609416
+> refreshed 2026-10-02 | upstream default: master @ cb8172446c463316efdf12a3e5aa0e0d386adf32
 
 ## Identity & policies
 - upstream: ckan/ckan, default branch `master`, primary language Python (Jinja templates), English-first (yes — issues/UI/docs all English)
@@ -42,6 +42,7 @@ Method/repro: build a `Declaration`, `load_core_declaration()`, then diff `set(c
 
 - `2026-09-24` trivial-fix pass (fork PR #26) — pr-opened — packed 10 genuine typo fixes across 8 files (config option help `resoure`->`resource`; CLI docstrings/comments; IAuthenticator docstring `accpets`->`accepts`; datastore backend+interface `dictonary`/`seach`/`mehtod`/`deferencing`; tracking model docstring `functinoality`); fork CI green (ruff/pyright/pytest/docs/towncrier)
 - `2026-10-01` self-found config-declaration gap: `ckan.jobs.default_list_limit` read by `job_list` but never declared — pr-opened (fork PR #30) — declare it in config_declaration.yaml + regression test tying the declared default to `ckan.lib.jobs.DEFAULT_JOB_LIST_LIMIT`; pre-fix `ckan config undeclared` reports the option
+- `2026-10-02` issue #8619 (`plugin-info ckan command fails due to named parameters`) — pr-opened (fork PR #31) — `ckan/cli/plugin_info.py::_function_info` builds its parameter list with `inspect.getargspec`, removed in Python 3.11, which raises `ValueError: Function has keyword-only parameters or annotations` for any enabled action/helper with kw-only args or annotations. Fix: walk `inspect.signature` instead, print kw-only params after a `*` marker, drop the old bound-method special case (signature already omits `self`/`cls`); regression test with a plugin action that has a kw-only arg. Re-verified live on upstream master @ cb81724 (line 75 still `getargspec`). Caveat: issue is assigned to contributor kowh-ai since 2025-01-23 (not an org member, 0 comments, no upstream PR in ~21 months) — the assignment is stale, but future runs should treat the spot as claimed unless it stays untouched.
 ## Mined gaps (discovered, not yet attempted)
 - `2026-09-09` #9048: sidebar "Add new resource" button renders on the Add Resource page itself (regression from #7586). Repro: GET /dataset/{name}/resource/new as editor shows the button. Expected: no link to the page you are already on. Fix: add `no_new_res` param to `ckan/templates/package/snippets/resources.html` (mirror `templates-midnight-blue`), pass `no_new_res=true` from `new_resource.html` + `new_resource_not_draft.html`, add towncrier fragment + controller test. Status: attempted (this run)
 - `2026-10-01` `ckan.jobs.default_list_limit` declaration gap (see Config-declaration audit). Status: attempted (fork PR #30)
