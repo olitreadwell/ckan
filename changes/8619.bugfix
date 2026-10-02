@@ -1,0 +1,2 @@
+Fix ``ckan plugin-info`` crashing when a plugin action or helper uses
+keyword-only arguments or type annotations.
