@@ -2,6 +2,7 @@
 
 from ckan.common import CKANConfig
 from ckan.config.declaration.load import GroupV1, OptionV1
+from ckan.lib.jobs import DEFAULT_JOB_LIST_LIMIT
 import pytest
 
 from ckan.config.declaration import Declaration, Key, Pattern, Flag
@@ -180,6 +181,18 @@ class TestDeclaration:
 
         decl.load_core_declaration()
         assert k in decl
+
+    def test_jobs_default_list_limit_is_declared(self):
+        """The ``job_list`` action falls back to the
+        ``ckan.jobs.default_list_limit`` option, so it must be declared.
+        An undeclared option is reported by ``ckan config undeclared`` and
+        is not checked by ``ckan config validate``.
+        """
+        decl = Declaration()
+        decl.load_core_declaration()
+
+        option = decl[Key().ckan.jobs.default_list_limit]
+        assert option.default == DEFAULT_JOB_LIST_LIMIT
 
     def test_load_plugin(self):
         k = Key().ckan.datastore.write_url
