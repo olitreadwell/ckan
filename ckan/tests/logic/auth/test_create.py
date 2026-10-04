@@ -405,6 +405,26 @@ class TestApiToken(object):
             user=user[u"name"],
         )
 
+    @pytest.mark.usefixtures(u"non_clean_db")
+    def test_auth_user_is_allowed_to_create_tokens_with_user_id(self):
+        user = factories.User()
+        helpers.call_auth(
+            u"api_token_create",
+            {u"model": model, u"user": user[u"name"]},
+            user_id=user[u"id"],
+        )
+
+    @pytest.mark.usefixtures(u"non_clean_db")
+    def test_auth_user_is_not_allowed_to_create_tokens_for_other_user(self):
+        user = factories.User()
+        other = factories.User()
+        with pytest.raises(logic.NotAuthorized):
+            helpers.call_auth(
+                u"api_token_create",
+                {u"model": model, u"user": user[u"name"]},
+                user_id=other[u"id"],
+            )
+
 
 @pytest.fixture
 def members_fixtures():

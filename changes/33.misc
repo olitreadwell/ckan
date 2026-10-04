@@ -1,0 +1,1 @@
+Accept ``user_id`` in ``api_token_create`` for consistency with ``api_token_list`` (``user`` is still supported)

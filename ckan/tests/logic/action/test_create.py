@@ -1985,6 +1985,22 @@ class TestApiToken(object):
         assert res.last_access is None
         assert res.id == jti
 
+    def test_token_created_with_user_id(self):
+        """api_token_create accepts user_id like api_token_list"""
+        from ckan.lib.api_token import decode
+
+        user = factories.User()
+        data = helpers.call_action(
+            u"api_token_create",
+            context={u"model": model, u"user": user[u"name"]},
+            user_id=user[u"id"],
+            name=u"token-name",
+        )
+        token = data[u"token"]
+        jti = decode(token)[u"jti"]
+        res = model.ApiToken.get(jti)
+        assert res.user_id == user[u"id"]
+
     def test_token_created_insert(self):
         """
         Sysadmins should be able to insert id, created_at, last_access
