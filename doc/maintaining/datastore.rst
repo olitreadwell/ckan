@@ -523,7 +523,7 @@ It has one major advantage over ``offset``: later queries take almost the
 exact same amount of time as the first ``offset 0`` (which means no data is skipped).
 
 In order to use keyset pagination, you'll need to add/update your ``filters`` in
-``datastore_search`` and use ``sort`` to match the the filter logic.
+``datastore_search`` and use ``sort`` to match the filter logic.
 
 For example to generate a keyset paginated query like this::
 
