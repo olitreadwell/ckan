@@ -211,7 +211,7 @@ def test_job(*args: Any) -> None:
     u'''Test job.
 
     A test job for debugging purposes. Prints out any arguments it
-    receives. Can be scheduled via ``paster jobs test``.
+    receives. Can be scheduled via ``ckan jobs test``.
     '''
     print(args)
 

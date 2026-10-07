@@ -27,7 +27,7 @@ describe('jQuery.url', {testIsolation: false}, function () {
       });
     });
 
-    it('should lowecase all characters', function () {
+    it('should lowercase all characters', function () {
       cy.window().then(win => {
         let target = win.jQuery.url.slugify('APPLES AND PEARS');
         assert.equal(target, 'apples-and-pears');
