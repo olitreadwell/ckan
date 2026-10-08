@@ -1440,6 +1440,10 @@ def api_token_create(context: Context,
 
     :param user: name or id of the user who owns new API Token
     :type user: string
+    :param user_id: alias of ``user``, name or id of the user who owns
+        new API Token. Provided for consistency with
+        :py:func:`~ckan.logic.action.get.api_token_list`
+    :type user_id: string
     :param name: distinctive name for API Token
     :type name: string
     :param created_at: datetime string for when the API Token was made.
@@ -1459,9 +1463,14 @@ def api_token_create(context: Context,
     :rtype: dictionary
 
     """
-    user, _name = _get_or_bust(data_dict, [u'user', u'name'])
+    # Support "user" for backwards compatibility
+    id_or_name = data_dict.get(u"user_id", data_dict.get(u"user"))
+    if not id_or_name:
+        raise ValidationError({u"user_id": [_("Missing value")]})
+    _get_or_bust(data_dict, u'name')
+    data_dict[u'user'] = id_or_name
 
-    if model.User.get(user) is None:
+    if model.User.get(id_or_name) is None:
         raise NotFound("User not found")
 
     _check_access(u'api_token_create', context, data_dict)
