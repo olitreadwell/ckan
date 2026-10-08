@@ -1993,6 +1993,11 @@ groups:
 
   - annotation: Background Job Settings
     options:
+      - key: ckan.jobs.default_list_limit
+        type: int
+        default: 200
+        description: The number of jobs returned by the ``job_list`` action when no
+          ``limit`` is given.
       - key: ckan.jobs.timeout
         type: int
         default: 180
