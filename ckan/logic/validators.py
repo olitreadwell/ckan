@@ -136,7 +136,7 @@ def natural_number_validator(value: Any, context: Context) -> Any:
     """Ensures that the value is non-negative integer.
     """
     value = int_validator(value, context)
-    if value < 0:
+    if value is not None and value < 0:
         raise Invalid(_('Must be a natural number'))
     return value
 
@@ -144,7 +144,7 @@ def is_positive_integer(value: Any, context: Context) -> Any:
     """Ensures that the value is an integer that is greater than zero.
     """
     value = int_validator(value, context)
-    if value < 1:
+    if value is not None and value < 1:
         raise Invalid(_('Must be a positive integer'))
     return value
 
