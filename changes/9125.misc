@@ -1,0 +1,2 @@
+The extension tutorial now installs extensions with ``pip install -e .``
+instead of the deprecated ``python setup.py develop`` command.
