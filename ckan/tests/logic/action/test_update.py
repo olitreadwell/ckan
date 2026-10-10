@@ -25,7 +25,7 @@ from freezegun import freeze_time
 class TestUpdate(object):
     def teardown(self):
         # Since some of the test methods below use the mock module to patch
-        # things, we use this teardown() method to remove remove all patches.
+        # things, we use this teardown() method to remove all patches.
         # (This makes sure the patches always get removed even if the test
         # method aborts with an exception or something.)
         mock.patch.stopall()
