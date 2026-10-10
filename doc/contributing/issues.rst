@@ -40,7 +40,7 @@ actions to expect:
 * A feature that you plan to code shortly will be happily discussed. It's often
   good to get the team's support for a feature before writing lots of code. You
   can then quote the issue number in the commit messages and branch name.
-  (Larger changes or suggestions by non-contributers are better discussed on
+  (Larger changes or suggestions by non-contributors are better discussed on
   https://github.com/ckan/ideas-and-roadmap instead)
 
 * Features may be marked "Good for Contribution" which means the Team is happy

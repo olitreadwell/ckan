@@ -25,7 +25,7 @@ configuration options runtime-editable: :ref:`ckan.datasets_per_page` and a cust
 ``ckanext.example_iconfigurer.test_conf``. You can see the changes in the :py:mod:`~ckanext.example_iconfigurer` extension that's packaged with CKAN. If you haven't done yet, you
 should check the :doc:`tutorial` first.
 
-This tutorial assumes that we have CKAN running on the paster development server at http://localhost:5000, and that we are using the :ref:`API key <api authentication>` of a sysadmin user.
+This tutorial assumes that we have CKAN running on the ``ckan run`` development server at http://localhost:5000, and that we are using the :ref:`API key <api authentication>` of a sysadmin user.
 
 First of all, let's call the :py:func:`~ckan.logic.action.get.config_option_list` API action to see what configuration options are editable during runtime (the ``| python -m json.tool`` bit at the end is added to format the output nicely)::
 

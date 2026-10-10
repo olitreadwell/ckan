@@ -333,7 +333,7 @@ def get_endpoint() -> Union[tuple[str, str], tuple[None, None]]:
     return blueprint, view
 
 
-# For some members in the the toolkit (e.g. that are exported from
+# For some members in the toolkit (e.g. that are exported from
 # third-party libraries) we override their docstrings by putting our
 # own docstrings into this dict. The Sphinx plugin that documents this
 # plugins toolkit will use these docstring overrides instead of the
