@@ -25,7 +25,7 @@
       return path;
     },
 
-    /* Simple helper function for both GET's and POST's to the ckan API
+    /* Simple helper function for both GETs and POSTs to the ckan API
      *
      * type - GET or POST
      * path - The API endpoint
