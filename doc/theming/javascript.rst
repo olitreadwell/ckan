@@ -194,7 +194,7 @@ Any ``data-module-*`` attributes on the HTML element are passed into the
 
 A |javascript| module can access the HTML element that it was applied to
 through the ``this.el`` variable. To add a popover to our info button, we call
-Bootstap's ``popover()`` function on the element, passing in an options object
+Bootstrap's ``popover()`` function on the element, passing in an options object
 with some of the options that Bootstrap's popovers accept:
 
 .. FIXME: This should be a literal.

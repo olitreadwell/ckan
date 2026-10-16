@@ -114,7 +114,7 @@ class ColumnType:
           extensions using IDataDictionaryForm
         - use td_ignore validator first to ignore input when not
           editing a table designer resource (schema applies to
-          all data data dictionaries not only table designer ones)
+          all data dictionaries not only table designer ones)
         - use td_pd validator last to store values as table designer
           plugin data so they can be read from datastore_info later
 

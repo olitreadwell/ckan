@@ -10,7 +10,7 @@ setup(
     # If you are changing from the default layout of your extension, you may
     # have to change the message extractors, you can read more about babel
     # message extraction at
-    # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
+    # https://babel.pocoo.org/en/latest/messages.html
     message_extractors={
         'ckanext': [
             ('**.py', 'python', None),

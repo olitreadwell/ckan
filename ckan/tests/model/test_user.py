@@ -227,7 +227,7 @@ class TestUser:
 
         # check cache works between sessions
         model.Session.expunge_all()
-        # don't refresh user user since this is how c.user works
+        # don't refresh user since this is how c.user works
         # i.e. don't do this: user = model.User.by_name(u'user')
         assert len(groups) == 1
         assert groups[0].name == group["name"]

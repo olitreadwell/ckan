@@ -119,5 +119,5 @@ def tabledesigner_compare_minimum(
     except DataError:
         return  # error in converting minimum value
     if bad_range:
-        errors[key].append(_('Less than minumum'))
+        errors[key].append(_('Less than minimum'))
         raise StopOnError

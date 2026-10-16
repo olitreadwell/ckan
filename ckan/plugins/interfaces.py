@@ -2140,7 +2140,7 @@ class IApiToken(Interface):
         but can extend its functionality(for example, refresh token)
         is registered here.
 
-        :param data_dict: dictionary that will bre returned from
+        :param data_dict: dictionary that will be returned from
             `api_token_create` API call.
         :type data_dict: dict
 

@@ -77,7 +77,7 @@ class DataError(DictizationError):
 
 
 class StopOnError(DictizationError):
-    '''error to stop validations for a particualar key'''
+    '''error to stop validations for a particular key'''
     pass
 
 
