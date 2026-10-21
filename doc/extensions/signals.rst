@@ -3,7 +3,7 @@ Signals
 
 
 CKAN provides built-in signal support, powered by `blinker
-<https://pythonhosted.org/blinker/>`_.
+<https://blinker.readthedocs.io/>`_.
 
 The same library is used by `Flask
 <https://flask.palletsprojects.com/en/1.1.x/signals/>`_ and anything

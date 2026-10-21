@@ -27,7 +27,7 @@ If your language is present, you can switch the default language simply by setti
 
    :ref:`internationalisation-settings`
 
-If your language is not supported yet, the remainder of this section section provides instructions on how to prepare a translation file and add it to CKAN.
+If your language is not supported yet, the remainder of this section provides instructions on how to prepare a translation file and add it to CKAN.
 
 
 ----------------------------------------------------------

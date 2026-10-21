@@ -1160,7 +1160,7 @@ Minor changes
   ``password2`` fields in the user edit form. (`#8208
   <https://github.com/ckan/ckan/pull/8208>`_)
 - ``ckan db init`` is now alias of ``ckan db upgrade``, which provides better
-  support for includuing plugin migrations (`#8339
+  support for including plugin migrations (`#8339
   <https://github.com/ckan/ckan/pull/8339>`_)
 - Use case sensitive email unique validator (`#7934
   <https://github.com/ckan/ckan/pull/7934>`_)
@@ -1841,7 +1841,7 @@ Migration notes
 ---------------
 
 - The default format for accepted uploads for user, groups and organization
-  images is now limited to PNG, GIF anf JPG. If you need to add additional
+  images is now limited to PNG, GIF and JPG. If you need to add additional
   formats you can use the :ref:`ckan.upload.user.mimetypes` and
   :ref:`ckan.upload.group.mimetypes`) (`#7028
   <https://github.com/ckan/ckan/pull/7028>`_)
@@ -2198,7 +2198,7 @@ Minor changes
 - Create a ``fresh_context()`` function to allow cleaning the ``context`` dict
   preserving some common values (``user``, ``model``, etc) (`#7112
   <https://github.com/ckan/ckan/pull/7112>`_)
-- Add ``--quiet`` option to ``ckan user token add`` command to mak easier to
+- Add ``--quiet`` option to ``ckan user token add`` command to make easier to
   integrate with automated scripts (`#7217
   <https://github.com/ckan/ckan/pull/7217>`_)
 - Updated and documented input param for ``api_token_list`` from ``user`` to
@@ -2650,7 +2650,7 @@ Minor changes
   <https://github.com/ckan/ckan/pull/7374>`_)
 - ``prepare_dataset_blueprint``: support dataset type (`#7031
   <https://github.com/ckan/ckan/pull/7031>`_)
-- Add ``--quiet`` option to ``ckan user token add`` command to mak easier to
+- Add ``--quiet`` option to ``ckan user token add`` command to make easier to
   integrate with automated scripts (`#7217
   <https://github.com/ckan/ckan/pull/7217>`_)
 
@@ -5650,7 +5650,7 @@ Major
  * New version of the Datastore. It has been completely rewritten to use
    PostgreSQL as backend, it is more stable and fast and supports SQL queries
    (#2733)
- * Clean up and simplifyng of CKAN's dependencies and source install
+ * Clean up and simplifying of CKAN's dependencies and source install
    instructions. Ubuntu 12.04 is now supported for source installs (#2428,#2592)
  * Big speed improvements when indexing datasets (#2788)
  * New action API reference docs, which individually document each function and
@@ -5744,7 +5744,7 @@ v1.7 2012-05-09
 
 Major:
  * Updated SOLR schema (#2327). Note: This will require and update of the SOLR schema file and a reindex.
- * Support for Organization based workflow, with membership determinig access permissions to datasets (#1669,#2255)
+ * Support for Organization based workflow, with membership determining access permissions to datasets (#1669,#2255)
  * Related items such as visualizations, applications or ideas can now be added to datasets (#2204)
  * Restricted vocabularies for tags, allowing grouping related tags together (#1698)
  * Internal analytics that track number of views and downloads for datasets and resources (#2251)

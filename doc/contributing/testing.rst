@@ -250,7 +250,7 @@ Pytest fixtures
 Mocking: the ``mock`` library
 -----------------------------
 
-We use the `mock library <http://www.voidspace.org.uk/python/mock/>`_ to
+We use the `mock library <https://docs.python.org/3/library/unittest.mock.html>`_ to
 replace parts of CKAN with mock objects. This allows a CKAN
 function to be tested independently of other parts of CKAN or third-party
 libraries that the function uses. This generally makes the test simpler and
