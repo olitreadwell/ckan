@@ -105,12 +105,20 @@ def test_munge_name_pass(original, expected):
             "10cm - 50cm Near InfraRed (NI) Digital Aerial Photography (AfA142)",
             "10cm-50cm-near-infrared-ni-digital-aerial-photography-afa142",
         ),
+        # Long title ending in a year: the truncation used to leave a hyphen
+        # before the year ("word--1999"), so a re-munge changed the result.
+        ("word " * 30 + "1999", "word-" * 18 + "1999"),
+        # Long title with no year: plain truncation used to leave a trailing
+        # hyphen that a re-munge stripped off.
+        ("word " * 40, "word-" * 18 + "word"),
     ],
 )
 def test_munge_title_to_name(original, expected):
-    """Munge a list of names gives expected results."""
-    munge = munge_title_to_name(original)
-    assert munge == expected
+    """Munge a title, and re-munging the result gives the same name."""
+    first_munge = munge_title_to_name(original)
+    assert first_munge == expected
+    second_munge = munge_title_to_name(first_munge)
+    assert second_munge == expected
 
 
 @pytest.mark.parametrize(
