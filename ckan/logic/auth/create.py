@@ -273,9 +273,11 @@ def member_create(context: Context, data_dict: DataDict) -> AuthResult:
 def api_token_create(context: Context, data_dict: DataDict) -> AuthResult:
     """Create new token for current user.
     """
-    user = model.User.get(data_dict['user'])
-    assert user
-    return {'success': user.name == context['user']}
+    # Support "user" for backwards compatibility
+    id_or_name = data_dict.get("user_id", data_dict.get("user"))
+    user = model.User.get(id_or_name)
+    success = user is not None and user.name == context[u'user']
+    return {'success': success}
 
 
 def package_collaborator_create(context: Context,
