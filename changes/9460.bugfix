@@ -1,0 +1,3 @@
+Stop ``natural_number_validator`` and ``is_positive_integer`` from raising an
+unhandled ``TypeError`` on empty or whitespace-only input. They now return
+``None`` for such values, matching ``int_validator``.
