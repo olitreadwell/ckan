@@ -735,6 +735,41 @@ def test_complex_without_imaginary_component_raises_invalid():
         raises_invalid(validators.int_validator)(1 + 0j, {})
 
 
+def test_natural_number_validator_accepts_zero_and_positive():
+    returns_arg(validators.natural_number_validator)(0)
+    returns_arg(validators.natural_number_validator)(42)
+
+
+def test_natural_number_validator_rejects_negative():
+    raises_invalid(validators.natural_number_validator)(-1, {})
+
+
+def test_natural_number_validator_none_and_empty_become_none():
+    # int_validator returns None for None or empty/whitespace strings.
+    # The comparison must not run on None (it would raise TypeError).
+    assert validators.natural_number_validator(None, {}) is None
+    assert validators.natural_number_validator("", {}) is None
+    assert validators.natural_number_validator("   ", {}) is None
+
+
+def test_is_positive_integer_accepts_positive():
+    returns_arg(validators.is_positive_integer)(1)
+    returns_arg(validators.is_positive_integer)(42)
+
+
+def test_is_positive_integer_rejects_zero_and_negative():
+    raises_invalid(validators.is_positive_integer)(0, {})
+    raises_invalid(validators.is_positive_integer)(-1, {})
+
+
+def test_is_positive_integer_none_and_empty_become_none():
+    # int_validator returns None for None or empty/whitespace strings.
+    # The comparison must not run on None (it would raise TypeError).
+    assert validators.is_positive_integer(None, {}) is None
+    assert validators.is_positive_integer("", {}) is None
+    assert validators.is_positive_integer("   ", {}) is None
+
+
 def test_bool_true():
     assert validators.boolean_validator(True, None)
 
