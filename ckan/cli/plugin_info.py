@@ -72,20 +72,22 @@ def _function_info(functions: dict[str, Callable[..., Any]]):
     output = []
     for function_name in functions:
         fn = functions[function_name]
-        args_info = inspect.getargspec(fn)
-        params = args_info.args
-        num_params = len(params)
-        if args_info.varargs:
-            params.append(u'*' + args_info.varargs)
-        if args_info.keywords:
-            params.append(u'**' + args_info.keywords)
-        if args_info.defaults:
-            offset = num_params - len(args_info.defaults)
-            for i, v in enumerate(args_info.defaults):
-                params[i + offset] = params[i + offset] + u'=' + repr(v)
-        # is this a classmethod if so remove the first parameter
-        if inspect.ismethod(fn) and inspect.isclass(fn.__self__):
-            params = params[1:]
+        params = []
+        star_added = False
+        for name, parameter in inspect.signature(fn).parameters.items():
+            if parameter.kind is inspect.Parameter.VAR_POSITIONAL:
+                star_added = True
+                params.append(u'*' + name)
+            elif parameter.kind is inspect.Parameter.VAR_KEYWORD:
+                params.append(u'**' + name)
+            else:
+                if parameter.kind is inspect.Parameter.KEYWORD_ONLY and not star_added:
+                    params.append(u'*')
+                    star_added = True
+                if parameter.default is inspect.Parameter.empty:
+                    params.append(name)
+                else:
+                    params.append(u'{0}={1!r}'.format(name, parameter.default))
         params = u', '.join(params)
         output.append(u'        {function_name}({params})'.format(
             function_name=function_name, params=params))
