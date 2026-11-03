@@ -125,6 +125,11 @@ def literal_string(s: str):
     """
     return u"'" + s.replace(u"'", u"''").replace(u'\0', '') + u"'"
 
+def _literal_for_text_clause(s: str) -> str:
+    # literal_string() for text that sa.text() will re-parse: also neutralise
+    # ':name' so SQLAlchemy does not treat it as a bind parameter.
+    return literal_string(s).replace(':', r'\:')
+
 
 def identifier(s: str):
     """
@@ -503,7 +508,7 @@ def _where_clauses(
 
                 clause_str = (
                     u'to_tsvector({0}, cast({1} as text)) @@ {2}').format(
-                        literal_string(lang),
+                        _literal_for_text_clause(lang),
                         identifier(field),
                         query_field)
                 clauses.append((clause_str,))
@@ -580,8 +585,8 @@ def _update_rank_statements_and_columns(
 def _build_query_and_rank_statements(
         lang: str, query: str, plain: bool, field: Optional[str] = None):
     query_alias = _ts_query_alias(field)
-    lang_literal = literal_string(lang)
-    query_literal = literal_string(query)
+    lang_literal = _literal_for_text_clause(lang)
+    query_literal = _literal_for_text_clause(query)
     if plain:
         statement = u"plainto_tsquery({lang_literal}, {literal}) {alias}"
     else:
@@ -1223,10 +1228,33 @@ def upsert_data(context: Context, data_dict: dict[str, Any]):
         )
 
         try:
-            results = context['connection'].execute(sa.text(sql_string), rows)
+            if len(rows) > 1:
+                itrans = context['connection'].begin_nested()
+                try:
+                    results = context['connection'].execute(sa.text(sql_string), rows)
+                except:
+                    itrans.rollback()
+                    raise
+                itrans.commit()
+            else:
+                results = context['connection'].execute(sa.text(sql_string), rows)
+
             if data_dict['include_records']:
                 data_dict['records'] = [dict(r) for r in results.mappings().all()]
+
         except (DatabaseError, DataError) as err:
+            if len(rows) > 1:
+                # determine failing row number for records_row
+                etrans = context['connection'].begin_nested()
+                try:
+                    for num, row in enumerate(rows):
+                        try:
+                            context['connection'].execute(sa.text(sql_string), [row])
+                        except (DatabaseError, DataError) as _err:
+                            break
+                finally:
+                    etrans.rollback()
+
             raise ValidationError({
                 'records': [_programming_error_summary(err)],
                 'records_row': num,
@@ -1819,7 +1847,7 @@ def _create_fulltext_trigger(connection: Any, resource_id: str):
 def upsert(context: Context, data_dict: dict[str, Any]):
     '''
     This method combines upsert insert and update on the datastore. The method
-    that will be used is defined in the mehtod variable.
+    that will be used is defined in the method variable.
 
     Any error results in total failure! For now pass back the actual error.
     Should be transactional.
@@ -2473,7 +2501,7 @@ class DatastorePostgresqlBackend(DatastoreBackend):
         engine = self._get_read_engine()
 
         if include_meta:
-            # resource id for deferencing aliases
+            # resource id for dereferencing aliases
             meta: dict[str, Any] = {'id': id}
             info['meta'] = meta
 

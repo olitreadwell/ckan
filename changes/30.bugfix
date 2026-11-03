@@ -1,0 +1,3 @@
+Declare the ``ckan.jobs.default_list_limit`` config option, used by the
+``job_list`` action, so that it is no longer reported by ``ckan config
+undeclared`` and is included in the configuration reference.
