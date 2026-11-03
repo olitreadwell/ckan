@@ -337,6 +337,7 @@ def get_endpoint() -> Union[tuple[str, str], tuple[None, None]]:
     return blueprint, view
 
 
+# For some members in the toolkit (e.g. that are exported from
 def get_site_user() -> User:
     """Return the site user.
 

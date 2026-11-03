@@ -69,7 +69,7 @@ internationalization to an older extension, you may need to add them.
 If you have your templates in a directory differing from the default location
 (``ckanext/yourplugin/i18n``),
 you may need to change the ``message_extractors`` stanza. You can read more
-about message extractors in the `babel documentation <http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration>`_.
+about message extractors in the `babel documentation <https://babel.pocoo.org/en/latest/messages.html>`_.
 
 
 Add a directory to store your translations::

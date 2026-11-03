@@ -1,7 +1,7 @@
 /* Quick module to enhance the Bootstrap tags plug-in to update the url
  * hash when a tab changes to allow the user to bookmark the page.
  *
- * Each tab id must use a prefix which which will be stripped from the hash.
+ * Each tab id must use a prefix which will be stripped from the hash.
  * This is to prevent the page jumping when the hash fragment changes.
  *
  * prefix - The prefix used on the ids.

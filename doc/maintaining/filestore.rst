@@ -209,7 +209,7 @@ To replace an uploaded file with a link to a file at a remote URL, use the
 ``clear_upload`` field::
 
     curl -H'Authorization: your-api-key' 'http://yourhost/api/action/resource_update' \
-        --form url=http://expample.com --form clear_upload=true --form id=resourceid
+        --form url=http://example.com --form clear_upload=true --form id=resourceid
 
 
 ----------------------------------------

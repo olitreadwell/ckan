@@ -63,7 +63,7 @@ Some notes on how these tests work:
   which are also useful for testing extensions.
 
 * You might also find it useful to read the
-  `Flask testing documentation <https://flask-doc.readthedocs.io/en/latest/testing.html>`_ (or
+  `Flask testing documentation <https://flask.palletsprojects.com/en/stable/testing/>`_ (or
   `Pylons testing documentation <https://docs.pylonsproject.org/projects/pylons-webframework/en/latest/testing.html>`_
   for plugins using legacy pylons controllers).
 

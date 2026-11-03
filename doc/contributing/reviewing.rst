@@ -36,7 +36,7 @@ with it. Nonetheless, here is an incomplete list of things to look for:
   breakage? Have the breaking changes been added to the :doc:`changelog
   </changelog>`?
 
-  Backwards-compability needs to be considered when making changes that break
+  Backwards-compatibility needs to be considered when making changes that break
   the interfaces that CKAN provides to third-party code, including API clients,
   plugins and themes.
 

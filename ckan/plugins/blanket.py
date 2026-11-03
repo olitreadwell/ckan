@@ -171,7 +171,7 @@ class Blanket(enum.Flag):
         """Extract artifacts required for the default implementation.
 
         Depending on interface, this method can produce function that satisfy
-        iterface's requirements, or collection with items that are used by the
+        interface's requirements, or collection with items that are used by the
         interface, or path to the file(config_declaration).
         """
         return _mapping[self].extract_subject(plugin)
@@ -207,7 +207,7 @@ class Mapping(NamedTuple):
 
 
 def _module_extractor(path: str):
-    """Import sub-modue of the plugin."""
+    """Import sub-module of the plugin."""
 
     def source(plugin: type[p.Plugin]):
         root = plugin.__module__.rsplit(".", 1)[0]

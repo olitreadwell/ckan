@@ -459,8 +459,8 @@ on the dataset search page.
 
 The SOLR sort ordering can define arbitrary functions for custom sorting, but
 this is beyond the scope of this tutorial for further details see
-http://wiki.apache.org/solr/CommonQueryParameters#sort and
-http://wiki.apache.org/solr/FunctionQuery
+https://solr.apache.org/guide/solr/latest/query-guide/common-query-parameters.html and
+https://solr.apache.org/guide/solr/latest/query-guide/function-queries.html
 
 
 You can find the complete source for this tutorial at

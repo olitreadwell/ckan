@@ -200,7 +200,7 @@ class DatastoreBackend:
         raise NotImplementedError()
 
     def resource_info(self, id: str) -> Any:
-        """Return DataDictonary with resource's info - #3414
+        """Return DataDictionary with resource's info - #3414
         """
         raise NotImplementedError()
 

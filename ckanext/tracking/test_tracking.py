@@ -12,7 +12,7 @@ from ckan.tests.helpers import call_action
 def export(tmp_path):
     """Export CKAN's tracking data and return it.
 
-    This simulates calling `paster tracking export` on the command line.
+    This simulates calling `ckan tracking export` on the command line.
 
     """
     # FIXME: Can this be done as more of a functional test where we
@@ -58,7 +58,7 @@ def track(app):
 def update_tracking_summary():
     """Update CKAN's tracking summary data.
 
-    This simulates calling `paster tracking update` on the command line.
+    This simulates calling `ckan tracking update` on the command line.
 
     """
     # FIXME: Can this be done as more of a functional test where we
@@ -467,7 +467,7 @@ class TestTracking(object):
 
     @pytest.mark.usefixtures("clean_db")
     def test_export(self, track, export):
-        """`paster tracking export` should export tracking data for all
+        """`ckan tracking export` should export tracking data for all
         datasets in CSV format.
 
         Only dataset tracking data is output to CSV file, not resource or page

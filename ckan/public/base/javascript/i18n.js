@@ -10,7 +10,7 @@
  *     ckan.i18n._('Hello, world!')
  *
  * The function will return the translated string in the currently selected
- * language. Often, a translateable string contains dynamic parts, for example
+ * language. Often, a translatable string contains dynamic parts, for example
  * a username. These can be included via named `%`-placeholders:
  *
  *     ckan.i18n._('Hello, %(name)s!', {name: 'Jessica'})
