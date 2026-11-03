@@ -55,9 +55,15 @@ def munge_title_to_name(name: str) -> str:
         year_match = re.match(r'.*?[_-]((?:\d{2,4}[-/])?\d{2,4})$', name)
         if year_match:
             year = year_match.groups()[0]
-            name = '%s-%s' % (name[:(max_length - len(year) - 1)], year)
+            # rstrip the truncated part so it does not end in a hyphen. A
+            # trailing hyphen here becomes a double hyphen before the year,
+            # which a re-munge collapses, breaking idempotency.
+            name = '%s-%s' % (
+                name[:(max_length - len(year) - 1)].rstrip('-'), year)
         else:
-            name = name[:max_length]
+            # rstrip so truncation does not leave a trailing hyphen, which a
+            # re-munge would strip off, breaking idempotency.
+            name = name[:max_length].rstrip('-')
     name = _munge_to_length(name, model.PACKAGE_NAME_MIN_LENGTH,
                             model.PACKAGE_NAME_MAX_LENGTH)
     return name
