@@ -2321,7 +2321,7 @@ def resource_view_get_fields(resource: dict[str, Any]) -> list["str"]:
     }
     try:
         result = logic.get_action('datastore_search')({}, data)
-    except logic.NotFound:
+    except (logic.NotFound, logic.ValidationError):
         return []
 
     fields = [field['id'] for field in result.get('fields', [])]
@@ -2438,7 +2438,7 @@ def uploads_enabled(storage_name: str | None = None) -> bool:
     if not storage_name:
         log.warning(
             "h.uploads_enabled must be called with object_type."
-            " Swithcing to legacy logic and checking availability of custom uploaders."
+            " Switching to legacy logic and checking availability of custom uploaders."
             " In future this call will cause an exception."
         )
         return has_classic_uploader
