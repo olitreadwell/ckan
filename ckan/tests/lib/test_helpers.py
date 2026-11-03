@@ -13,12 +13,11 @@ import flask_babel
 from faker import Faker
 import pytest
 
+from ckan import plugins as p, types
 from ckan.config.middleware import flask_app
 import ckan.lib.helpers as h
-import ckan.exceptions
+from ckan.exceptions import CkanUrlException
 from ckan.tests import helpers, factories
-
-CkanUrlException = ckan.exceptions.CkanUrlException
 
 
 class BaseUrlFor(object):
@@ -658,7 +657,7 @@ class TestBuildNavMain(object):
 
     def test_build_nav_icon(self):
         link = h.build_nav_icon('organization.edit', 'Edit', id='org-id', icon='pencil')
-        assert link == '<li><a href="/organization/edit/org-id"><i class="fa fa-pencil"></i>Edit</a></li>'
+        assert link == '<li><a href="/organization/edit/org-id"><i class="fa fa-pencil"></i> Edit</a></li>'
 
 
 class TestRemoveUrlParam:
@@ -896,7 +895,7 @@ def test_decode_view_request_filters(test_request_context):
     # no matching local returns base
     ({"notes": "untranslated",
       "notes_translated": {'en': 'en', 'en_GB': 'en_GB'}}, 'es', 'untranslated'),
-    # specific returns specfic
+    # specific returns specific
     ({"notes": "untranslated",
       "notes_translated": {'en': 'en', 'en_GB': 'en_GB'}}, 'en_GB', 'en_GB'),
     # variant returns base
@@ -912,15 +911,19 @@ def test_get_translated(data_dict, locale, result, monkeypatch):
 
 
 class TestUploadsEnabled:
-    def test_disabled_with_no_type(self):
-        """Without upload type, helper returns False."""
+    def test_disabled_with_no_type_no_path_and_no_implementation(self):
+        """In simple case helper returns False."""
         assert not h.uploads_enabled()
 
-    @pytest.mark.ckan_config("ckan.uploads_enabled", False)
-    def test_disabled(self):
-        """When uploads are disabled globally, they are disabled for all types."""
-        for type in ["resource", "group", "user", "admin"]:
-            assert not h.uploads_enabled(type)
+    @pytest.mark.ckan_config("ckan.storage_path", "/tmp")
+    def test_enabled_with_path_and_no_type(self, reset_storages: Any):
+        """With storage_path set, uploads are enabled - that's a classic behavior."""
+        assert h.uploads_enabled()
+
+    @pytest.mark.with_plugins({"test_uploader": type("TestUploader", (p.IUploader, p.SingletonPlugin), {})})
+    def test_enabled_with_implementation_and_no_type(self, provide_plugin: types.FixtureProvidePlugin):
+        """With an implementation of IUploader, uploads are enabled - that's a classic behavior."""
+        assert h.uploads_enabled()
 
     @pytest.mark.ckan_config("ckan.files.storage.test.type", "ckan:memory")
     def test_enabled_with_storage(self):
@@ -1135,10 +1138,21 @@ def test_unix_locale_to_bcp47():
     assert h.unix_locale_to_bcp47('fr_FR') == 'fr-FR'
 
 
+class TestDarkModeEnabled(object):
+    def test_enabled_by_default(self):
+        assert h.dark_mode_enabled() is True
+
+    @pytest.mark.ckan_config("ckan.theme.enable_dark_mode", False)
+    def test_can_be_disabled(self):
+        assert h.dark_mode_enabled() is False
+
+
 def test_get_facet_items_dict(test_request_context: Any):
-    """get_facet_items_dict returns a list of facet items with the correct active state based on the current request parameters."""
+    """get_facet_items_dict returns a list of facet items
+    with the correct active state based on the current request parameters."""
     facets = [
-        {"name": name, "display_name": name, "count": 1} for name in ["aaa", "bbb", "ccc"]
+        {"name": name, "display_name": name, "count": 1}
+        for name in ["aaa", "bbb", "ccc"]
     ]
 
     with test_request_context("/dataset?test=ccc&test=aaa"):
@@ -1151,3 +1165,30 @@ def test_get_facet_items_dict(test_request_context: Any):
 
         assert result[2]["name"] == "ccc"
         assert result[2]["active"]
+
+
+def test_resource_view_fields(monkeypatch):
+    resource_dict = {'id': 'abcde'}
+    # empty list if datastore is inactive
+    assert h.resource_view_get_fields(resource_dict) == []
+    resource_dict['datastore_active'] = False
+    assert h.resource_view_get_fields(resource_dict) == []
+
+    # populated list if datastore is active
+    resource_dict['datastore_active'] = True
+    monkeypatch.setattr(
+        h.logic, 'get_action',
+        lambda name: (
+            lambda context, data_dict: {
+                'fields': [{'id': 'foo'}, {'id': 'baz'}]
+            }
+        ))
+    assert h.resource_view_get_fields(resource_dict) == ['baz', 'foo']
+
+    # empty list if datastore query fails
+    def raise_validation_error():
+        raise h.logic.ValidationError('test')
+    monkeypatch.setattr(
+        h.logic, 'get_action',
+        lambda name: (lambda context, data_dict: raise_validation_error()))
+    assert h.resource_view_get_fields(resource_dict) == []

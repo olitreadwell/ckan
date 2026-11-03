@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import logging
 from typing import Any, Optional, Union
 
@@ -175,11 +174,15 @@ def download(package_type: str,
             if mimetype:
                 overrides["content_type"] = mimetype
             location = files.Location(filepath)
-            file_data = files.FileData(
-                location,
-                size=storage.size(location),
-                **overrides,
-            )
+            try:
+                file_data = files.FileData(
+                    location,
+                    size=storage.size(location),
+                    **overrides,
+                )
+            except files.exc.LocationError:
+                return base.abort(404, _('No download is available'))
+
             if isinstance(storage, files.Storage):
                 resp = storage.as_response(file_data, filename)
             else:
@@ -631,12 +634,7 @@ def view(package_type: str,
         return base.abort(404, _(u'Resource not found'))
 
     view = None
-    if request.args.get(u'resource_view', u''):
-        try:
-            view = json.loads(request.args.get(u'resource_view', u''))
-        except ValueError:
-            return base.abort(409, _(u'Bad resource view data'))
-    elif view_id:
+    if view_id:
         try:
             view = get_action(u'resource_view_show')(context, {u'id': view_id})
         except (NotFound, NotAuthorized):
